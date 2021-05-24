@@ -5,7 +5,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { logoutFromFirebase, updateUserInfo, requestOrderDetail, requestOrderID, createOrder } from "../actions";
 import { StoreContext } from "../store";
 
-const ProfileCard = () => {
+const ProfileCard = ({orderId}) => {
   const {
     state: {
       cart,
@@ -156,104 +156,17 @@ const ProfileCard = () => {
         ):(
           order.length===0?(<div className="eachOrder_title">
             <p>None</p></div>):(
-              order.map((eachOrder, index)=>{return(
-                
-                // <Button
-                //   style={{ margin: "0.8rem" }}
-                //   onClick={handleOrderlist}
-                // >
-                //   訂單編號: {eachOrder.id}</Button>
-                <Row gutter={[24, 24]}>
-                <Col         
-                 xs={{ span: 20, offset: 2 }}
-                 
-                 >
-                
-                  <div className="eachOrder_title"><p>Order: {eachOrder.id}</p></div>
-                  </Col>
-                <Col         
-                 xs={{ span: 20, offset: 2 }}
-                 lg={{ span: 13, offset: 2 }}
-                 >
-                
-                <div className="card card-body">
-                                        <h2 style={{ color: 'white' }}>Shipping</h2>
-                                        <p>
-                                           <strong>Name:</strong> {eachOrder.shippingAddress.fullName} <br />
-                                           <strong>Address: </strong> {eachOrder.shippingAddress.address},
-                                  {eachOrder.shippingAddress.city}, {eachOrder.shippingAddress.postalCode}
-                                  ,{eachOrder.shippingAddress.country}
-                                        </p>
-                                     </div>
-                                     <div className="card card-body">
-                                        <h2 style={{ color: 'white' }}>Payment</h2>
-                                        <p>
-                                           <strong>Method:</strong> {eachOrder.paymentMethod}
-                                        </p>
-                                     </div>
-                                     
-                                     <div className="card card-body">
-                                        <h2 style={{ color: 'white' }}>Order Items</h2>
-                                        {
-                                           eachOrder.orderItems.map(item => (
-                                              <li key={item.id} className="cart-item">
-                                                 <div className="cart-image">
-                                                    <img src={item.image} alt={item.name} />
-                                                 </div>
-                                                 <div className="cart-item-content">
-                                                    <div className="cart-name">{item.name}</div>
-                                                    <div className="product-qty">
-                                                       Qty: {item.qty}
-                                                    </div>
-                                                 </div>
-                                                 <div className="cart-item-end">
-                                                    <div className="cart-price">
-                                                       ${item.price * item.qty}
-                                                    </div>
-                                                 </div>
-                
-                                              </li>
-                                           ))
-                                           }
-                                        <div className="cart-total-price-wrap">
-                                           Total
-                            <div className="cart-total-price">${eachOrder.totalPrice}</div>
-                                        </div>
-                                     </div>
-                
-                 </Col>
-                   <Col
-                   xs={{ span: 20, offset: 2 }}
-                   lg={{ span: 7, offset: 0 }}
+              order.map(order=>{return(
+                <Link to={`/order/${order.id}`}>
+                  <Button
+                  style={{ margin: "0.8rem" }}
                 >
-                   <div className="card card-body">
-                      <h2 style={{ color: 'white' }}>Order Summary</h2>
-                      <div className="row">
-                         <div>Items</div>
-                         <div>${eachOrder.itemsPrice}</div>
-                      </div>
-                      <div className="row">
-                         <div>Shipping</div>
-                         <div>${eachOrder.shippingPrice}</div>
-                      </div>
-                      <div className="row">
-                         <div>Tax</div>
-                         <div>${eachOrder.taxPrice}</div>
-                      </div>
-                      <div className="row">
-                         <div>
-                            <strong> Order Total</strong>
-                         </div>
-                         <div>
-                            <strong>${eachOrder.totalPrice}</strong>
-                         </div>
-                      </div>
-                    
-                   </div>
+                  訂單編號: {order.id}</Button>
+                </Link>
+              )
                 
-                </Col>     
-                </Row>         
-              )})
+
+              })
             )
         )):(<div></div>)}
     </div>
